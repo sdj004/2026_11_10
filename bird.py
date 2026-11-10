@@ -67,6 +67,12 @@ class Bird:
         self.direction = direction
         self.frame = 0.0
 
+    def update(self):
+        elapsed = max(0.0, game_framework.frame_time)
+        self.frame = (
+            self.frame + BIRD_FRAME_RATE * elapsed
+        ) % len(FRAME_RECTS)
+
     @classmethod
     def _load_image(cls):
         if cls.image is None:

@@ -94,6 +94,30 @@ class BirdTests(unittest.TestCase):
         self.assertEqual(args[0:4], bird.FRAME_RECTS[5])
         self.assertEqual(args[5], 'h')
 
+    def test_play_mode_registers_and_cleans_up_ten_birds(self):
+        boy_module = types.ModuleType('boy')
+        grass_module = types.ModuleType('grass')
+        boy_module.Boy = type('StubBoy', (), {})
+        grass_module.Grass = type('StubGrass', (), {})
+        sys.modules['boy'] = boy_module
+        sys.modules['grass'] = grass_module
+
+        import game_world
+        import play_mode
+
+        game_world.clear()
+        play_mode.init()
+        self.assertEqual(len(play_mode.birds), 10)
+        self.assertEqual(
+            sum(isinstance(item, bird.Bird) for item in game_world.world[1]),
+            10
+        )
+        self.assertEqual(len({item.direction for item in play_mode.birds}), 2)
+
+        play_mode.finish()
+        self.assertEqual(play_mode.birds, [])
+        self.assertTrue(all(not layer for layer in game_world.world))
+
 
 if __name__ == '__main__':
     unittest.main()

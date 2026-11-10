@@ -114,3 +114,5 @@
 | 새의 화면 크기 | `0.6m → 30px`, `30/166 ≈ 0.1807` 배율 | 남자 표시 키와 비둘기 날개폭 가정에 대한 비례 환산; 참조 픽셀과 투명 여백 때문에 시각적 근사 |
 | 프레임 전환 속도 | `4.5 × 92.59 / (30/5) ≈ 69.44 frames/s` | 4.5배는 시각 조정값이며 생물학적 측정치가 아님 |
 | 날갯짓 반복 주파수 | `69.44/14 ≈ 4.96Hz` | 14프레임 순환에서 계산된 애니메이션 결과; 실제 새의 날갯짓 주파수로 해석하지 않음 |
+
+위 선택값은 [bird.py](./bird.py)의 `BIRD_SPEED_KMPH`, `BIRD_SCALE`, `WINGTIP_TRAVEL_SOURCE_PX`, `WINGTIP_TRANSITION_FRAMES`, `WINGTIP_SPEED_RATIO`, `BIRD_FRAME_RATE` 상수에 대응한다. 속도 환산값은 [game_constants.py](./game_constants.py)의 `PIXEL_PER_METER`를 사용하고, 남자 캐릭터의 화면 기준 높이는 [boy.py](./boy.py)의 100px 프레임 크기를 사용한다.

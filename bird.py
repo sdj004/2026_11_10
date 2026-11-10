@@ -57,6 +57,16 @@ BIRD_FRAME_RATE = (
 class Bird:
     image = None
 
+    def __init__(self, x, y, direction=1):
+        if direction not in (-1, 1):
+            raise ValueError('direction must be -1 or 1')
+
+        self.image = self._load_image()
+        self.x = float(x)
+        self.y = float(y)
+        self.direction = direction
+        self.frame = 0.0
+
     @classmethod
     def _load_image(cls):
         if cls.image is None:

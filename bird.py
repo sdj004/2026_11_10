@@ -73,6 +73,22 @@ class Bird:
             self.frame + BIRD_FRAME_RATE * elapsed
         ) % len(FRAME_RECTS)
 
+    def draw(self):
+        source_x, source_y, source_width, source_height = (
+            FRAME_RECTS[int(self.frame)]
+        )
+        if self.direction == 1:
+            self.image.clip_draw(
+                source_x, source_y, source_width, source_height,
+                self.x, self.y, BIRD_DRAW_WIDTH, BIRD_DRAW_HEIGHT
+            )
+        else:
+            self.image.clip_composite_draw(
+                source_x, source_y, source_width, source_height,
+                0, 'h', self.x, self.y,
+                BIRD_DRAW_WIDTH, BIRD_DRAW_HEIGHT
+            )
+
     @classmethod
     def _load_image(cls):
         if cls.image is None:

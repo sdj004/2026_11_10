@@ -1,3 +1,7 @@
+from pico2d import get_canvas_height, get_canvas_width, load_image
+
+import game_framework
+import game_world
 from game_constants import PIXEL_PER_METER
 
 
@@ -48,3 +52,13 @@ WINGTIP_DISTANCE_PER_FRAME = (
 BIRD_FRAME_RATE = (
     BIRD_SPEED_PPS * WINGTIP_SPEED_RATIO / WINGTIP_DISTANCE_PER_FRAME
 )
+
+
+class Bird:
+    image = None
+
+    @classmethod
+    def _load_image(cls):
+        if cls.image is None:
+            cls.image = load_image('bird_animation.png')
+        return cls.image

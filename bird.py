@@ -66,11 +66,13 @@ class Bird:
         self.y = float(y)
         self.direction = direction
         self.frame = 0.0
+        self._keep_in_canvas()
 
     def update(self):
         elapsed = max(0.0, game_framework.frame_time)
-        left = BIRD_DRAW_WIDTH / 2
-        right = max(left, get_canvas_width() - left)
+        self._keep_in_canvas()
+        left = min(BIRD_DRAW_WIDTH / 2, get_canvas_width() / 2)
+        right = get_canvas_width() - left
         span = right - left
         if span == 0:
             self.x = left
@@ -91,6 +93,12 @@ class Bird:
         self.frame = (
             self.frame + BIRD_FRAME_RATE * elapsed
         ) % len(FRAME_RECTS)
+
+    def _keep_in_canvas(self):
+        half_width = min(BIRD_DRAW_WIDTH / 2, get_canvas_width() / 2)
+        half_height = min(BIRD_DRAW_HEIGHT / 2, get_canvas_height() / 2)
+        self.x = min(max(self.x, half_width), get_canvas_width() - half_width)
+        self.y = min(max(self.y, half_height), get_canvas_height() - half_height)
 
     def draw(self):
         source_x, source_y, source_width, source_height = (

@@ -69,7 +69,25 @@ class Bird:
 
     def update(self):
         elapsed = max(0.0, game_framework.frame_time)
-        self.x += self.direction * BIRD_SPEED_PPS * elapsed
+        left = BIRD_DRAW_WIDTH / 2
+        right = max(left, get_canvas_width() - left)
+        span = right - left
+        if span == 0:
+            self.x = left
+            self.direction = 1
+        else:
+            phase = (
+                self.x - left if self.direction == 1
+                else 2 * span - (self.x - left)
+            )
+            phase = (phase + BIRD_SPEED_PPS * elapsed) % (2 * span)
+            if phase < span:
+                self.x = left + phase
+                self.direction = 1
+            else:
+                self.x = right - (phase - span)
+                self.direction = -1
+
         self.frame = (
             self.frame + BIRD_FRAME_RATE * elapsed
         ) % len(FRAME_RECTS)

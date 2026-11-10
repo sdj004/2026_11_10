@@ -69,6 +69,7 @@ class Bird:
 
     def update(self):
         elapsed = max(0.0, game_framework.frame_time)
+        self.x += self.direction * BIRD_SPEED_PPS * elapsed
         self.frame = (
             self.frame + BIRD_FRAME_RATE * elapsed
         ) % len(FRAME_RECTS)

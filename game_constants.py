@@ -1,0 +1,1 @@
+PIXEL_PER_METER = 10.0 / 0.3

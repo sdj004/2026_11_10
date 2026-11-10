@@ -5,6 +5,7 @@ from sdl2 import (SDL_KEYDOWN, SDL_KEYUP, SDLK_LEFT, SDLK_RIGHT,
                   SDLK_SPACE)
 from transitions import Machine
 
+from game_constants import PIXEL_PER_METER
 import game_world
 from ball import Ball
 
@@ -57,7 +58,6 @@ class Sleep:
     def move(self, boy):
         boy.start_run()
 
-PIXEL_PER_METER = (10.0 / 0.3) # 10 pixel 30 cm
 RUN_SPEED_KMPH = 7.0 # Km / Hour 가벼운 달리기 조깅 속도
 RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)

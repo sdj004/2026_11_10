@@ -1,0 +1,58 @@
+import time
+running = False
+stack = []
+
+
+def change_mode(mode):
+    if stack:
+        stack.pop().finish()
+    stack.append(mode)
+    mode.init()
+
+
+def push_mode(mode):
+    if stack:
+        stack[-1].pause()
+    stack.append(mode)
+    mode.init()
+
+
+def pop_mode():
+    if stack:
+        stack.pop().finish()
+    if stack:
+        stack[-1].resume()
+    else:
+        quit()
+
+
+def quit():
+    global running
+    running = False
+
+#time.time() 1970년 1월 1일 0시 00분을 기준으로 시간이 나온다.
+
+frame_time = 0.0
+
+def run(start_mode):
+    global running, stack, frame_time
+    running = True
+    stack = [start_mode]
+    try:
+        start_mode.init()
+        frame_time = 0.0
+        current_time = time.time()
+        while running:
+            #time.sleep(0.4) # 성능 최악 pc 시뮬레이션
+            stack[-1].handle_events()
+            stack[-1].update()
+            stack[-1].render()
+            frame_time = time.time() - current_time
+            frame_rate = 1.0 / frame_time
+            current_time += frame_time
+            #print(f'Frame Time: {frame_time:.9f}, Frame Rate: {frame_rate:.2f}')
+            time.sleep(0.02)
+    finally:
+        while stack:
+            stack.pop().finish()
+        running = False
